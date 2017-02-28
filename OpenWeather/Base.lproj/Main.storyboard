@@ -22,8 +22,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JGa-8s-2EX" customClass="WeatherLocationView" customModule="OpenWeather" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="375" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Of7-sg-Jxb">
+                                        <rect key="frame" x="166" y="5" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfR-su-8XY">
+                                        <rect key="frame" x="168.5" y="26" width="37.5" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="cfR-su-8XY" firstAttribute="top" secondItem="Of7-sg-Jxb" secondAttribute="bottom" id="DLA-yh-XmW"/>
+                                    <constraint firstItem="Of7-sg-Jxb" firstAttribute="centerX" secondItem="JGa-8s-2EX" secondAttribute="centerX" id="EoD-nF-Jlx"/>
+                                    <constraint firstItem="cfR-su-8XY" firstAttribute="centerX" secondItem="JGa-8s-2EX" secondAttribute="centerX" id="TYf-bo-zBs"/>
+                                    <constraint firstAttribute="height" constant="50" id="URO-uA-gc0"/>
+                                    <constraint firstItem="Of7-sg-Jxb" firstAttribute="top" secondItem="JGa-8s-2EX" secondAttribute="top" constant="5" id="Yez-A1-e2T"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="countryLabel" destination="cfR-su-8XY" id="Eeo-FG-L9I"/>
+                                    <outlet property="nameLabel" destination="Of7-sg-Jxb" id="Df1-Wh-bHg"/>
+                                </connections>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zLi-Dj-gQJ">
-                                <rect key="frame" x="16" y="69" width="343" height="598"/>
+                                <rect key="frame" x="16" y="119" width="343" height="548"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UGa-fm-QFR">
                                     <size key="itemSize" width="82" height="81"/>
@@ -112,7 +141,10 @@
                             <constraint firstItem="EiG-oW-TPc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7rB-s4-o9G"/>
                             <constraint firstItem="zLi-Dj-gQJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="MWB-0F-g1I"/>
                             <constraint firstItem="EiG-oW-TPc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="OkN-xi-bX7"/>
-                            <constraint firstItem="zLi-Dj-gQJ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="gYe-dS-NKB"/>
+                            <constraint firstItem="JGa-8s-2EX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="YMh-SE-nEL"/>
+                            <constraint firstItem="zLi-Dj-gQJ" firstAttribute="top" secondItem="JGa-8s-2EX" secondAttribute="bottom" constant="5" id="cl1-gN-thm"/>
+                            <constraint firstItem="JGa-8s-2EX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="cz7-RE-KxA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="JGa-8s-2EX" secondAttribute="trailing" constant="-16" id="lHD-Aq-pj5"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zLi-Dj-gQJ" secondAttribute="bottom" id="yFA-tX-s7g"/>
                         </constraints>
                     </view>
@@ -120,6 +152,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="EiG-oW-TPc" id="UN2-C2-bRa"/>
                         <outlet property="collectionView" destination="zLi-Dj-gQJ" id="XUT-tE-bZf"/>
+                        <outlet property="weatherLocationView" destination="JGa-8s-2EX" id="IIn-Ej-Wki"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

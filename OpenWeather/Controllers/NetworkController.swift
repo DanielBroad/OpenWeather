@@ -32,7 +32,7 @@ class NetworkController : WeatherAPIRequests {
     }
     
     private func restCall(url : URL,completion: @escaping (WeatherAPIResult) -> Void ) {
-        let task = self.foregroundSession.dataTask(with: url, completionHandler: { (data : Data?, response : URLResponse?, error : Error?) -> Void in
+        let task = foregroundSession.dataTask(with: url, completionHandler: { (data : Data?, response : URLResponse?, error : Error?) -> Void in
             if let error = error {
                 completion(.error(error))
             } else if let data = data {
@@ -54,7 +54,7 @@ class NetworkController : WeatherAPIRequests {
     }
     
     func download(image fromUrl : URL, completion: @escaping (UIImage?) -> Void) {
-        let task = URLSession.shared.dataTask(with: fromUrl) { (responseData, responseUrl, error) -> Void in
+        let task = foregroundSession.dataTask(with: fromUrl) { (responseData, responseUrl, error) -> Void in
             if let data = responseData,
                 let image = UIImage(data: data) {
                 DispatchQueue.main.async {

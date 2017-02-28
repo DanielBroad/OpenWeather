@@ -12,6 +12,8 @@ class WeatherViewController: UIViewController {
     @IBOutlet var collectionView : UICollectionView!
     @IBOutlet var activityIndicator : UIActivityIndicatorView!
     
+    @IBOutlet var weatherLocationView : WeatherLocationView!
+    
     var networkController : WeatherAPIRequests = NetworkController()
     
     var forecastWeek = ForecastWeek()
@@ -26,13 +28,16 @@ class WeatherViewController: UIViewController {
         super.viewWillAppear(animated)
         
         activityIndicator.startAnimating()
+        self.weatherLocationView.isHidden = true
         let forecastController = ForecastController(networkController: networkController)
         forecastController.getForecast { [weak self] (networkforcast, error) in
             guard let `self` = self else { return }
             self.activityIndicator.stopAnimating()
             if let networkforcast = networkforcast {
                 self.forecastWeek = networkforcast
+                self.weatherLocationView.city = networkforcast.city
                 self.collectionView.reloadData()
+                self.weatherLocationView.isHidden = false
             } else if let error = error {
                 SimpleAlert.show(fromViewController: self, title: error.localizedDescription, message: nil)
             }

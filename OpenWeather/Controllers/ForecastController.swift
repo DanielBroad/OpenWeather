@@ -9,10 +9,6 @@
 
 import Foundation
 
-private struct APIDictionaryKey {
-    static let Forecast = "list"
-}
-
 class ForecastController {
     
     var networkController : WeatherAPIRequests
@@ -21,30 +17,18 @@ class ForecastController {
         networkController = _networkController
     }
     
-    func getForecast(completionHandler: @escaping ([ForecastDay]?, Error?) -> ()) {
+    func getForecast(completionHandler: @escaping (ForecastWeek?, Error?) -> ()) {
         networkController.getForecast(completion: { (result) in
             switch result {
             case let .success(jsonDictionary):
-                if let jsonForecastArray = jsonDictionary[APIDictionaryKey.Forecast] as? Array<Any> {
-                    let forecasts : [Forecast?] = jsonForecastArray.map({ (eachforecast) in
-                        if let forecastDictionary = eachforecast as? Dictionary<String,Any>,
-                            let forecast = try? Forecast(withDictionary: forecastDictionary) {
-                            return forecast
-                        } else {
-                            assertionFailure("INVALID FORECAST DATA")
-                            return nil
-                        }
-                    })
-                    
-                    let allvalidforecasts = forecasts.flatMap{ $0 } // remove optionals
-                    
-                    var day = ForecastDay()
-                    day.items = allvalidforecasts
+                do {
+                    let week = try ForecastWeek(withDictionary: jsonDictionary)
                     DispatchQueue.main.async {
-                        completionHandler([day],nil)
+                        completionHandler(week,nil)
                     }
+                } catch let error {
+                    completionHandler(nil,error)
                 }
-
             case let .error(error):
                 completionHandler(nil,error)
             }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ForecastDay {
+class ForecastDay { // class because items is mutable
     var timeStamp : Date?
     var items : [Forecast] = []
 }

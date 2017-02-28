@@ -27,7 +27,7 @@ struct Forecast {
     
     init(withDictionary jsonData : Dictionary<String, Any>) throws {
         if let timeStamp = jsonData[ForecastDictionaryKeys.TimeStamp] as? Double {
-            self.timeStamp = Date(timeIntervalSinceReferenceDate: timeStamp)
+            self.timeStamp = Date(timeIntervalSince1970: timeStamp)
         }
         
         if let main = jsonData[ForecastDictionaryKeys.Main] as? Dictionary <String,Any> {
@@ -49,6 +49,24 @@ struct Forecast {
             throw ForecastError.invalidData
         }
         
+    }
+}
+
+extension Forecast { // grouping key
+    struct Shared {
+        static var timeFormatter : DateFormatter = {
+            var formatter = DateFormatter() // re-use this for performance
+            formatter.dateFormat = "yyyy_MM_dd"
+            return formatter
+        }()
+    }
+    
+    var groupingKey : String {
+        if let timeStamp = timeStamp {
+            return Shared.timeFormatter.string(from: timeStamp)
+        } else {
+            return ""
+        }
     }
 }
 

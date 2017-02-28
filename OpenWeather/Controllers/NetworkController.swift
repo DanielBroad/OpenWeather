@@ -19,7 +19,8 @@ public enum WeatherAPIResult { // calls can succeed or fail!
 }
 
 public protocol WeatherAPIRequests { // calls supported
-    func getForecast(completion: @escaping (WeatherAPIResult) -> Void );
+    func getForecast(completion: @escaping (WeatherAPIResult) -> Void )
+    func download(image fromUrl : URL, completion: @escaping (UIImage?) -> Void)
 }
 
 class NetworkController : WeatherAPIRequests {
@@ -50,5 +51,24 @@ class NetworkController : WeatherAPIRequests {
     
     func getForecast(completion: @escaping (WeatherAPIResult) -> Void ) {
         restCall(url: URLs.Forecast, completion: completion)
+    }
+    
+    func download(image fromUrl : URL, completion: @escaping (UIImage?) -> Void) {
+        let task = URLSession.shared.dataTask(with: fromUrl) { (responseData, responseUrl, error) -> Void in
+            if let data = responseData,
+                let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    completion(image)
+                }
+            }
+            else {
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            }
+        }
+        
+        // Run task
+        task.resume()
     }
 }

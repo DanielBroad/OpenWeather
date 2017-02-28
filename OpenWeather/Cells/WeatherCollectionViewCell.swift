@@ -34,7 +34,7 @@ class WeatherCollectionViewCell: UICollectionViewCell {
     
     func uniqueTag() -> Int { // a simple way to deal with async cell re-use, a better way would be an operationQueue
         tagCounter += 1 // ++tagCounter no longer available in swift 3
-        tag = tagCounter
+        tag = tagCounter < Int.max ? tagCounter : 0
         return tag
     }
 }
